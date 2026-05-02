@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR — For Shravani 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0d0a0e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    color: #f5eee6;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* stars */
+  .bg-stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .bg-star   { position: absolute; border-radius: 50%; background: #fff;
+    animation: tw var(--d) ease-in-out infinite alternate; }
+  @keyframes tw { from { opacity:.08 } to { opacity:.7 } }
+
+  /* card */
+  .card {
+    position: relative; z-index: 2;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(249,212,194,0.25);
+    border-radius: 28px;
+    padding: 48px 40px 44px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    animation: rise 1.2s ease both;
+  }
+  @keyframes rise {
+    from { opacity:0; transform:translateY(28px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .icon { font-size: 38px; display: block; margin-bottom: 14px;
+    animation: hb 1.8s ease-in-out infinite; }
+  @keyframes hb {
+    0%,100%{transform:scale(1)} 14%{transform:scale(1.18)}
+    28%{transform:scale(1)} 42%{transform:scale(1.12)} 56%{transform:scale(1)}
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 400; font-style: italic;
+    color: #f9d4c2; margin-bottom: 6px; line-height: 1.2;
+  }
+  .sub {
+    font-size: 12px; font-weight: 300; color: #9e8880;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px;
+  }
+
+  /* QR wrapper */
+  .qr-wrap {
+    display: inline-block;
+    padding: 16px;
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 0 6px rgba(249,212,194,0.18);
+  }
+  #qr { display: block; }
+  #qr img, #qr canvas { display: block !important; border-radius: 6px; }
+
+  .scan-label {
+    font-size: 13px; font-weight: 300; color: #c9b0a8;
+    margin-bottom: 28px; line-height: 1.6;
+  }
+  .scan-label strong { color: #f9d4c2; font-weight: 400; }
+
+  /* divider */
+  .div { display:flex; align-items:center; gap:12px; margin-bottom:24px; opacity:.3; }
+  .dl  { flex:1; height:.5px; background:#f9d4c2; }
+  .dd  { width:4px; height:4px; border-radius:50%; background:#f9d4c2; }
+
+  /* letter preview snippet */
+  .snippet {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #d4b8b0;
+    line-height: 1.8;
+    border-left: 2px solid rgba(249,212,194,0.3);
+    padding-left: 16px;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+
+  /* NEET pill */
+  .neet-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(249,212,194,0.1);
+    border: 0.5px solid rgba(249,212,194,0.3);
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 13px; font-weight: 300; color: #f9d4c2;
+  }
+  .neet-pill span { font-size: 16px; }
+
+  .footer {
+    margin-top: 36px; font-size: 11px; font-weight: 300;
+    color: rgba(249,212,194,0.25); letter-spacing: 1px;
+    position: relative; z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-stars" id="bgstars"></div>
+
+<div class="card">
+  <span class="icon">🌸</span>
+  <h1>For Shravani</h1>
+  <p class="sub">A letter of love &amp; apology</p>
+
+  <div class="qr-wrap">
+    <div id="qr"></div>
+  </div>
+
+  <p class="scan-label">
+    Scan this QR with your phone<br>
+    to read the full <strong>44‑line apology letter</strong> 💌
+  </p>
+
+  <div class="div"><div class="dl"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dl"></div></div>
+
+  <div class="snippet">
+    "When you needed me most, I wasn't there —<br>
+    and that haunts me every single day…"
+  </div>
+
+  <div class="neet-pill">
+    <span>✨</span>
+    Go conquer NEET UG tomorrow, doctor!
+  </div>
+</div>
+
+<p class="footer">made with love &nbsp;·&nbsp; just for you &nbsp;·&nbsp; 🌸</p>
+
+<script>
+// Stars
+const bg = document.getElementById('bgstars');
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'bg-star';
+  const sz = Math.random()*2.2+0.4;
+  s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+1.5).toFixed(1)}s;animation-delay:${(Math.random()*4).toFixed(1)}s`;
+  bg.appendChild(s);
+}
+
+// ---- QR Code ----
+// This encodes a beautiful self-contained mini page as a data URL
+// so the QR works offline, no server needed!
+
+const apologyHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Shravani 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0a0e;color:#f5eee6;font-family:'Lato',sans-serif;padding:32px 20px 64px;min-height:100vh}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,6vw,42px);font-weight:400;font-style:italic;color:#f9d4c2;text-align:center;margin-bottom:6px}
+.sub{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9e8880;margin-bottom:40px}
+.icon{text-align:center;font-size:36px;margin-bottom:14px;display:block;animation:hb 1.8s ease-in-out infinite}
+@keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.15)}28%{transform:scale(1)}42%{transform:scale(1.1)}56%{transform:scale(1)}}
+.letter{background:rgba(255,255,255,0.04);border:0.5px solid rgba(249,212,194,0.2);border-radius:16px;padding:32px 24px}
+.sal{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#f9d4c2;margin-bottom:22px}
+.body{font-size:14.5px;font-weight:300;line-height:2;color:#e8dbd4}
+.body p{display:flex;gap:12px;border-bottom:0.5px solid rgba(249,212,194,0.05);padding:1px 0}
+.body p:last-child{border:none}
+.n{font-size:9px;color:rgba(249,212,194,0.22);min-width:16px;padding-top:5px;font-family:monospace}
+.sign{margin-top:28px;text-align:right;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:#f9d4c2}
+.neet{margin-top:32px;padding:20px;border-radius:12px;background:rgba(249,212,194,0.08);border:0.5px solid rgba(249,212,194,0.2);text-align:center}
+.neet h2{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#f9d4c2;margin-bottom:8px}
+.neet p{font-size:13px;font-weight:300;color:#c9b0a8;line-height:1.7}
+.footer{text-align:center;margin-top:48px;font-size:11px;color:rgba(249,212,194,0.28);letter-spacing:1px}
+</style>
+</head>
+<body>
+<span class="icon">🌸</span>
+<h1>A Letter From the Heart</h1>
+<p class="sub">For Shravani, with love</p>
+<div class="letter">
+<div class="sal">My dearest Shravani,</div>
+<div class="body">
+<p><span class="n">01</span><span>I am writing this with a heavy heart and trembling hands, because some things need to be said.</span></p>
+<p><span class="n">02</span><span>I am sorry. Truly, deeply, completely sorry — and I mean every syllable of that.</span></p>
+<p><span class="n">03</span><span>I mistreated you, and there is no excuse worthy of that truth.</span></p>
+<p><span class="n">04</span><span>You deserved kindness in every moment, and I gave you something far less.</span></p>
+<p><span class="n">05</span><span>You deserved to feel safe with me, and I failed to build that safety for you.</span></p>
+<p><span class="n">06</span><span>When you needed me most, I wasn't there — and that haunts me every single day.</span></p>
+<p><span class="n">07</span><span>You reached out for my hand, and I let the distance swallow us whole.</span></p>
+<p><span class="n">08</span><span>I was selfish when I should have been selfless, silent when I should have spoken.</span></p>
+<p><span class="n">09</span><span>You are someone who gives everything — your time, your warmth, your whole soul.</span></p>
+<p><span class="n">10</span><span>And I took that for granted, as if your love were a given and not a gift.</span></p>
+<p><span class="n">11</span><span>I should have shown up — not just in body, but in spirit, in attention, in care.</span></p>
+<p><span class="n">12</span><span>I should have asked how you were, not just assumed that you were fine.</span></p>
+<p><span class="n">13</span><span>Every time you smiled and said "it's okay," I wish I had looked closer.</span></p>
+<p><span class="n">14</span><span>Because it wasn't always okay, and I was too wrapped up to notice.</span></p>
+<p><span class="n">15</span><span>I am sorry for the words I said when I should have stayed quiet.</span></p>
+<p><span class="n">16</span><span>I am sorry for the words I didn't say when they would have meant the world.</span></p>
+<p><span class="n">17</span><span>I am sorry for making you feel small in any moment — you are anything but small.</span></p>
+<p><span class="n">18</span><span>You are enormous — enormous in heart, in courage, in the way you love people.</span></p>
+<p><span class="n">19</span><span>You carry so much without complaint, and I added to your weight instead of lifting it.</span></p>
+<p><span class="n">20</span><span>That was wrong. And I own it completely.</span></p>
+<p><span class="n">21</span><span>I don't deserve forgiveness, but I am asking for it anyway — humbly, honestly.</span></p>
+<p><span class="n">22</span><span>Not because it erases the past, but because I want to do better for your future.</span></p>
+<p><span class="n">23</span><span>You are the kind of person who makes the world brighter just by existing in it.</span></p>
+<p><span class="n">24</span><span>Your laughter is a sound I never want to stop hearing.</span></p>
+<p><span class="n">25</span><span>Your strength — especially now, on the eve of the most important exam of your life —</span></p>
+<p><span class="n">26</span><span>is the most inspiring thing I have ever witnessed up close.</span></p>
+<p><span class="n">27</span><span>You studied when it was hard. You pushed when you were tired.</span></p>
+<p><span class="n">28</span><span>You kept going when the world felt heavy — including the weight I added to it.</span></p>
+<p><span class="n">29</span><span>That tells me everything about who you are: extraordinary.</span></p>
+<p><span class="n">30</span><span>I should have been your anchor. I should have been your peace.</span></p>
+<p><span class="n">31</span><span>From here on, that is exactly what I intend to be.</span></p>
+<p><span class="n">32</span><span>I promise to show up — really show up — when you need someone beside you.</span></p>
+<p><span class="n">33</span><span>I promise to listen more, assume less, and love louder.</span></p>
+<p><span class="n">34</span><span>I promise that your feelings will never be dismissed or minimised again.</span></p>
+<p><span class="n">35</span><span>I promise that the version of me you deserve is the one I am choosing to become.</span></p>
+<p><span class="n">36</span><span>You asked me to apologise, and I hope this letter gives you a piece of my heart.</span></p>
+<p><span class="n">37</span><span>Not the polished, rehearsed kind — the raw, real, vulnerable kind.</span></p>
+<p><span class="n">38</span><span>Because that is what you deserve: honesty, not performance.</span></p>
+<p><span class="n">39</span><span>And above all else, I want you to know — you are loved. Completely.</span></p>
+<p><span class="n">40</span><span>Go into tomorrow's exam knowing that someone in your corner believes in you fiercely.</span></p>
+<p><span class="n">41</span><span>Every page you studied, every night you stayed up — it was all worth it.</span></p>
+<p><span class="n">42</span><span>Walk into that hall with your head high, Shravani. You are ready.</span></p>
+<p><span class="n">43</span><span>And when you come out the other side, I will be there — this time, I promise.</span></p>
+<p><span class="n">44</span><span>All my love, all my sorrys, all my tomorrows — they are yours. 🌸</span></p>
+</div>
+<div class="sign">Yours, always —</div>
+</div>
+<div class="neet">
+<h2>For your big day tomorrow ✨</h2>
+<p>NEET UG is just one step on your incredible journey.<br>You have worked so hard and you are more than ready.<br><strong style="color:#f9d4c2;font-weight:400;">Go conquer it, doctor. 🩺💛</strong></p>
+</div>
+<p class="footer">made with love · just for you · 🌸</p>
+</body>
+</html>`;
+
+const encoded = encodeURIComponent(apologyHTML);
+const dataURL = 'data:text/html;charset=utf-8,' + encoded;
+
+new QRCode(document.getElementById('qr'), {
+  text: dataURL,
+  width: 240,
+  height: 240,
+  colorDark: '#2a1a20',
+  colorLight: '#ffffff',
+  correctLevel: QRCode.CorrectLevel.L
+});
+</script>
+</body>
+</html>
